@@ -4,7 +4,7 @@ import tensorflow as tf
 import numpy as np
 import cv2
 import gdown
-import matplotlib.cm as cm
+import matplotlib
 from PIL import Image
 
 # ---------- Page config ----------
@@ -90,7 +90,7 @@ def overlay_heatmap(original_array, heatmap, alpha=0.4):
     heatmap_resized = cv2.resize(heatmap, (IMG_WIDTH, IMG_HEIGHT))
     heatmap_uint8 = np.uint8(255 * heatmap_resized)
 
-    jet = cm.get_cmap("jet")
+    jet = matplotlib.colormaps["jet"]
     jet_colors = jet(np.arange(256))[:, :3]
     jet_heatmap = np.uint8(jet_colors[heatmap_uint8] * 255)
 
@@ -134,3 +134,4 @@ if uploaded_file is not None:
         st.warning(
             "This is an educational/research prototype and not a medical diagnosis."
         )
+
