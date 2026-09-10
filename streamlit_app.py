@@ -7,14 +7,13 @@ import gdown
 import matplotlib
 from PIL import Image
 
-# ---------- Page config ----------
 st.set_page_config(
     page_title="Pneumonia Detection",
     page_icon="🩻",
     layout="centered"
 )
 
-st.title("🩻 Chest X-Ray Pneumonia Detection")
+st.title("Chest X-Ray Pneumonia Detection")
 st.write(
     "Upload a chest X-ray image and the trained ResNet50 model will predict "
     "NORMAL or PNEUMONIA, along with a Grad-CAM heatmap showing which regions "
@@ -24,14 +23,9 @@ st.write(
 IMG_HEIGHT = 180
 IMG_WIDTH = 180
 CLASS_NAMES = ["NORMAL", "PNEUMONIA"]
-
-# The model is too large for GitHub, so it's hosted on Google Drive and
-# downloaded automatically the first time the app runs.
 GOOGLE_DRIVE_FILE_ID = "1BDsTzu6QnQZg57-0d4x52wPRo0kunDVT"
 MODEL_PATH = "pneumonia_resnet_final.keras"
 
-
-# ---------- Model loading ----------
 @st.cache_resource
 def load_model():
     if not os.path.exists(MODEL_PATH):
@@ -97,8 +91,6 @@ def overlay_heatmap(original_array, heatmap, alpha=0.4):
     superimposed = np.clip(jet_heatmap * alpha + original_array, 0, 255).astype("uint8")
     return superimposed
 
-
-# ---------- UI ----------
 uploaded_file = st.file_uploader("Upload a Chest X-Ray", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
